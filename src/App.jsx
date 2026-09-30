@@ -1,68 +1,174 @@
-const services = [
-  ['Sites & Landing Pages', 'Presença digital rápida, clara e construída para converter.'],
-  ['Aplicações & CRM', 'Fluxos de reserva, gestão e relação com clientes.'],
-  ['SEO / AEO / GEO', 'Estrutura técnica e conteúdo pensado para pesquisa local e IA.'],
-  ['Automações', 'Menos tarefas manuais e mais tempo para o negócio.'],
-  ['UX / UI', 'Interfaces com identidade própria, sem aspecto de template.'],
-  ['Estratégia Digital', 'Decisões baseadas no negócio, no contexto e nos resultados.'],
-]
+import { useEffect, useRef } from 'react'
 
 const projects = [
-  ['Pentehouse Barbearia — Loja 20', 'Website · Reservas · CRM · SEO local'],
-  ['Best Pizza & Kebab', 'Website · Menu · Conversão · SEO local'],
-  ['Restaurante 2 Irmãos', 'Website · Conteúdo · Presença local'],
+  {
+    name: 'Pentehouse Barbearia — Loja 20',
+    meta: 'Website · Reservas · CRM · SEO local',
+    text: 'Uma presença digital com identidade própria, preparada para reservas, gestão e crescimento local.',
+    className: 'pentehouse',
+  },
+  {
+    name: 'Best Pizza & Kebab',
+    meta: 'Website · Menu digital · Conversão · SEO local',
+    text: 'Uma experiência rápida e directa para transformar pesquisa local em pedidos e clientes.',
+    className: 'pizza',
+  },
+  {
+    name: 'Restaurante 2 Irmãos',
+    meta: 'Website · Conteúdo · Presença local',
+    text: 'Uma montra digital construída à volta da autenticidade do espaço e da comida portuguesa.',
+    className: 'irmaos',
+  },
 ]
 
+const services = [
+  ['Websites & Landing Pages', 'Sites rápidos, distintos e orientados ao negócio.'],
+  ['Aplicações & CRM', 'Ferramentas à medida para gerir clientes, reservas e operação.'],
+  ['SEO / AEO / GEO', 'Estrutura para pesquisa local, motores de resposta e IA.'],
+  ['Automações', 'Menos tarefas repetidas. Mais tempo para o que cria valor.'],
+  ['UX / UI', 'Interfaces claras, próprias e sem aspecto de template.'],
+  ['Estratégia Digital', 'Decisões alinhadas com contexto, objectivos e crescimento.'],
+]
+
+function useReveal() {
+  useEffect(() => {
+    const items = document.querySelectorAll('[data-reveal]')
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('is-visible')
+      }),
+      { threshold: 0.15 },
+    )
+
+    items.forEach(item => observer.observe(item))
+    return () => observer.disconnect()
+  }, [])
+}
+
 function App() {
+  const cubeRef = useRef(null)
+  useReveal()
+
+  useEffect(() => {
+    const cube = cubeRef.current
+    if (!cube) return
+
+    const handleMove = event => {
+      const x = event.clientX / window.innerWidth - 0.5
+      const y = event.clientY / window.innerHeight - 0.5
+      cube.style.setProperty('--mx', x.toFixed(3))
+      cube.style.setProperty('--my', y.toFixed(3))
+    }
+
+    window.addEventListener('pointermove', handleMove, { passive: true })
+    return () => window.removeEventListener('pointermove', handleMove)
+  }, [])
+
   return (
     <main>
       <header className="site-header shell">
         <a className="brand" href="#top" aria-label="Quasi Norte, início">
           <span>QUASI</span><strong>NORTE</strong>
+          <small>Soluções Digitais</small>
         </a>
+
         <nav aria-label="Navegação principal">
-          <a href="#servicos">Serviços</a>
+          <a href="#top">Início</a>
           <a href="#projetos">Projectos</a>
+          <a href="#servicos">Serviços</a>
           <a href="#processo">Processo</a>
           <a href="#contacto">Contacto</a>
         </nav>
-        <a className="header-cta" href="#contacto">Falar connosco</a>
+
+        <a className="header-cta" href="#contacto">Pedir proposta <span>→</span></a>
       </header>
 
       <section id="top" className="hero shell">
-        <div className="hero-copy">
-          <p className="eyebrow">SOLUÇÕES DIGITAIS PARA NEGÓCIOS REAIS</p>
-          <h1>Ideias que deixam de ser ideia.</h1>
-          <p className="hero-lead">Criamos sites, aplicações, sistemas e experiências digitais com identidade, estratégia e intenção comercial.</p>
+        <div className="hero-copy page-enter">
+          <p className="eyebrow">IDEIAS COM DIRECÇÃO</p>
+          <h1>Negócios reais.<br />Presença digital <em>com direcção.</em></h1>
+          <p className="hero-lead">
+            Websites, aplicações, automações, SEO / AEO / GEO e estratégia digital
+            para negócios que querem crescer no mundo real.
+          </p>
           <div className="hero-actions">
-            <a className="button primary" href="#projetos">Ver trabalhos</a>
-            <a className="button secondary" href="#contacto">Pedir proposta</a>
+            <a className="button primary" href="#contacto">Pedir proposta <span>→</span></a>
+            <a className="button ghost" href="#projetos">Ver projectos</a>
           </div>
-          <div className="hero-signals" aria-label="Princípios Quasi Norte">
-            <span>Identidade</span><span>Conversão</span><span>Crescimento</span>
-          </div>
+          <p className="hero-foot">Estratégia / tecnologia / resultados reais</p>
         </div>
 
-        <div className="cube-stage" aria-label="Área reservada para o cubo interactivo Quasi Norte">
-          <div className="north-line"><span>N</span></div>
-          <div className="cube-placeholder">
-            <span>QN</span>
+        <div className="hero-object page-enter" ref={cubeRef}>
+          <div className="cube-aura" />
+          <img
+            className="hero-cube"
+            src="/quasi-norte-cube.webp"
+            alt="Cubo Quasi Norte com Q e N"
+          />
+          <div className="hero-object-copy" aria-hidden="true">
+            <span>Mais do que websites.</span>
+            <span>Soluções para o amanhã.</span>
           </div>
-          <p className="offset-mark">13,13°</p>
-          <p className="stage-note">O cubo interactivo entra aqui.</p>
         </div>
       </section>
 
-      <section id="servicos" className="section shell">
-        <div className="section-heading">
-          <p className="eyebrow">O QUE FAZEMOS</p>
-          <h2>Do primeiro clique ao sistema que fica.</h2>
-          <p>Não vendemos peças isoladas. Construímos a presença e a infraestrutura digital de cada negócio à medida do que precisa.</p>
+      <section className="manifest shell" data-reveal>
+        <div>
+          <p className="eyebrow">QUEM SOMOS</p>
+          <h2>Transformamos ideias em soluções reais.</h2>
         </div>
+        <div className="manifest-copy">
+          <p>
+            A Quasi Norte cria experiências digitais para negócios reais:
+            presença, operação, conversão e crescimento.
+          </p>
+          <p className="manifest-note">Tecnologia com propósito. Design com intenção.</p>
+        </div>
+      </section>
+
+      <section id="projetos" className="projects shell">
+        <div className="section-heading" data-reveal>
+          <div>
+            <p className="eyebrow">PROJECTOS EM DESTAQUE</p>
+            <h2>Três negócios. Três identidades.</h2>
+          </div>
+          <p>O mesmo princípio: cada solução tem de parecer que nasceu dentro daquele negócio.</p>
+        </div>
+
+        <div className="project-grid">
+          {projects.map(project => (
+            <article className="project-card" key={project.name} data-reveal>
+              <div className={`project-art ${project.className}`}>
+                <div className="project-screen">
+                  <span className="project-brand-mark">{project.name.split(' ')[0]}</span>
+                  <span className="project-screen-line" />
+                  <span className="project-screen-line short" />
+                </div>
+              </div>
+              <div className="project-content">
+                <p className="project-meta">{project.meta}</p>
+                <h3>{project.name}</h3>
+                <p>{project.text}</p>
+                <a href="#contacto">Ver projecto <span>→</span></a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="servicos" className="services shell">
+        <div className="section-heading" data-reveal>
+          <div>
+            <p className="eyebrow">O QUE FAZEMOS</p>
+            <h2>Soluções digitais para crescimento real.</h2>
+          </div>
+          <p>Unimos estratégia, design e tecnologia sem transformar o negócio num template.</p>
+        </div>
+
         <div className="service-grid">
-          {services.map(([title, text], i) => (
-            <article className="service-card" key={title}>
-              <span className="index">{String(i + 1).padStart(2, '0')}</span>
+          {services.map(([title, text]) => (
+            <article className="service-card" key={title} data-reveal>
+              <div className="service-glyph" aria-hidden="true" />
               <h3>{title}</h3>
               <p>{text}</p>
             </article>
@@ -70,51 +176,75 @@ function App() {
         </div>
       </section>
 
-      <section id="projetos" className="section shell projects-section">
-        <div className="section-heading split-heading">
+      <section id="processo" className="process shell">
+        <div className="section-heading compact" data-reveal>
           <div>
-            <p className="eyebrow">TRABALHO REAL</p>
-            <h2>Negócios diferentes. Soluções que pertencem a cada um.</h2>
+            <p className="eyebrow">COMO TRABALHAMOS</p>
+            <h2>Ouvir. Definir. Construir. Evoluir.</h2>
           </div>
-          <p>O portefólio é a prova: cada projecto tem a sua linguagem, o seu contexto e o seu objectivo.</p>
+          <p>Sem passos decorativos. Cada fase existe porque reduz erro e melhora o resultado final.</p>
         </div>
-        <div className="project-grid">
-          {projects.map(([title, meta], i) => (
-            <article className="project-card" key={title}>
-              <div className="project-visual"><span>0{i + 1}</span></div>
-              <div className="project-copy">
-                <h3>{title}</h3>
-                <p>{meta}</p>
-                <span className="project-link">Caso de estudo ↗</span>
-              </div>
-            </article>
-          ))}
+
+        <div className="process-track" data-reveal>
+          <div className="process-line" />
+          <div className="process-point">
+            <span className="dot" />
+            <strong>Escuta</strong>
+            <p>Negócio, objectivos, contexto e problemas reais.</p>
+          </div>
+          <div className="process-point">
+            <span className="dot" />
+            <strong>Estratégia</strong>
+            <p>Direcção, prioridades e arquitectura da solução.</p>
+          </div>
+          <div className="process-point">
+            <span className="dot" />
+            <strong>Criação</strong>
+            <p>Design, desenvolvimento, conteúdo e integração.</p>
+          </div>
+          <div className="process-point">
+            <span className="dot" />
+            <strong>Crescimento</strong>
+            <p>Medição, optimização e evolução contínua.</p>
+          </div>
         </div>
       </section>
 
-      <section id="processo" className="section shell process-section">
-        <div className="section-heading">
-          <p className="eyebrow">COMO TRABALHAMOS</p>
-          <h2>Perceber primeiro. Construir depois.</h2>
-        </div>
-        <ol className="process-list">
-          <li><span>01</span><strong>Diagnóstico</strong><p>Negócio, clientes, contexto, concorrência e objectivo.</p></li>
-          <li><span>02</span><strong>Direcção</strong><p>Estratégia, estrutura, identidade e prioridades.</p></li>
-          <li><span>03</span><strong>Construção</strong><p>Design, desenvolvimento, conteúdo e integração.</p></li>
-          <li><span>04</span><strong>Evolução</strong><p>Medição, optimização e crescimento contínuo.</p></li>
-        </ol>
-      </section>
+      <section id="contacto" className="final-cta">
+        <div className="final-glow" />
+        <div className="shell final-inner" data-reveal>
+          <div>
+            <p className="eyebrow">VAMOS CONSTRUIR O PRÓXIMO PASSO</p>
+            <h2>O teu negócio merece mais do que um simples site.</h2>
+            <p>Conta-nos o que tens. Nós encontramos a direcção.</p>
+            <div className="hero-actions">
+              <a className="button primary" href="mailto:geral@quasinorte.pt">Pedir proposta <span>→</span></a>
+              <a className="button ghost" href="mailto:geral@quasinorte.pt">Enviar mensagem</a>
+            </div>
+          </div>
 
-      <section id="contacto" className="contact shell">
-        <p className="eyebrow">QUASE NORTE. NUNCA GENÉRICO.</p>
-        <h2>Se o teu negócio merece uma presença própria, começamos por aqui.</h2>
-        <a className="button primary" href="mailto:geral@quasinorte.pt">Falar connosco</a>
+          <div className="final-cube-wrap" aria-hidden="true">
+            <img src="/quasi-norte-cube.webp" alt="" />
+          </div>
+        </div>
       </section>
 
       <footer className="footer shell">
-        <div className="brand footer-brand"><span>QUASI</span><strong>NORTE</strong></div>
-        <p>Soluções Digitais.</p>
-        <p>Porto, Portugal</p>
+        <div className="brand footer-brand">
+          <span>QUASI</span><strong>NORTE</strong>
+          <small>Soluções Digitais</small>
+        </div>
+        <div className="footer-links">
+          <a href="#top">Início</a>
+          <a href="#projetos">Projectos</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#processo">Processo</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+        <div className="footer-contact">
+          <a href="mailto:geral@quasinorte.pt">geral@quasinorte.pt</a>
+          <span>Porto, Portugal</span>
+        </div>
       </footer>
     </main>
   )
