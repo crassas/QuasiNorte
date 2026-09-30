@@ -63,6 +63,7 @@ function useReveal() {
 function App() {
   const cubeRef = useRef(null)
   const cubeSrc = `${import.meta.env.BASE_URL}quasi-norte-cube.webp`
+  const cubeSpriteSrc = `${import.meta.env.BASE_URL}quasi-norte-cube-sprite.webp`
   useReveal()
 
   useEffect(() => {
@@ -117,10 +118,11 @@ function App() {
 
         <div className="hero-object page-enter" ref={cubeRef}>
           <div className="cube-aura" />
-          <img
-            className="hero-cube"
-            src={cubeSrc}
-            alt="Cubo Quasi Norte com Q e N"
+          <div
+            className="hero-cube hero-cube-motion"
+            style={{ backgroundImage: `url(${cubeSpriteSrc})` }}
+            role="img"
+            aria-label="Cubo Quasi Norte com Q e N"
           />
           <div className="hero-object-copy" aria-hidden="true">
             <span>Mais do que websites.</span>
