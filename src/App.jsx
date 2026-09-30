@@ -30,6 +30,21 @@ const services = [
   ['Estratégia Digital', 'Decisões alinhadas com contexto, objectivos e crescimento.'],
 ]
 
+const launchIncludes = [
+  'Landing page personalizada',
+  'Versão mobile',
+  'Contacto directo por telefone, email ou WhatsApp',
+  'SEO técnico e local de base',
+  'Preparação para indexação no Google',
+  '1 ronda de ajustes após publicação',
+]
+
+const launchExtras = [
+  ['Página adicional', '+ 40 €'],
+  ['Google Business Profile', '+ 35 €'],
+  ['Manutenção mensal', 'desde 19 €/mês'],
+]
+
 function useReveal() {
   useEffect(() => {
     const items = document.querySelectorAll('[data-reveal]')
@@ -76,6 +91,7 @@ function App() {
           <a href="#top">Início</a>
           <a href="#projetos">Projectos</a>
           <a href="#servicos">Serviços</a>
+          <a href="#start">Começar</a>
           <a href="#processo">Processo</a>
           <a href="#contacto">Contacto</a>
         </nav>
@@ -124,6 +140,60 @@ function App() {
           </p>
           <p className="manifest-note">Tecnologia com propósito. Design com intenção.</p>
         </div>
+      </section>
+
+      <section id="start" className="launch shell">
+        <div className="launch-copy" data-reveal>
+          <p className="eyebrow">QUASI NORTE START</p>
+          <h2>O teu negócio online. Sem complicar.</h2>
+          <p className="launch-lead">
+            Uma presença digital profissional para negócios locais que precisam de começar bem:
+            clara, rápida, preparada para telemóvel e construída para transformar visitas em contactos.
+          </p>
+
+          <div className="launch-audience">
+            <span>Ideal para</span>
+            <p>Barbearias · Cafés · Restaurantes · Lojas · Serviços locais · Profissionais independentes</p>
+          </div>
+        </div>
+
+        <article className="launch-card" data-reveal>
+          <div className="launch-card-top">
+            <p>PRIMEIROS 3 PROJETOS</p>
+            <span>Oferta de lançamento</span>
+          </div>
+
+          <div className="launch-price">
+            <span>Preço de lançamento</span>
+            <strong>99 €</strong>
+          </div>
+
+          <ul className="launch-list">
+            {launchIncludes.map(item => <li key={item}>{item}</li>)}
+          </ul>
+
+          <a
+            className="button primary launch-button"
+            href="mailto:geral@quasinorte.pt?subject=Quasi%20Norte%20Start&body=Quero%20saber%20mais%20sobre%20o%20Quasi%20Norte%20Start."
+          >
+            Quero começar <span>→</span>
+          </a>
+
+          <p className="launch-note">
+            Domínio e serviços externos não estão incluídos quando implicam custos de terceiros.
+            Primeiro confirmamos o âmbito do projeto.
+          </p>
+
+          <div className="launch-extras" aria-label="Extras opcionais">
+            <p>EXTRAS OPCIONAIS</p>
+            {launchExtras.map(([name, price]) => (
+              <div className="launch-extra" key={name}>
+                <span>{name}</span>
+                <strong>{price}</strong>
+              </div>
+            ))}
+          </div>
+        </article>
       </section>
 
       <section id="projetos" className="projects shell">
@@ -238,6 +308,7 @@ function App() {
           <a href="#top">Início</a>
           <a href="#projetos">Projectos</a>
           <a href="#servicos">Serviços</a>
+          <a href="#start">Começar</a>
           <a href="#processo">Processo</a>
           <a href="#contacto">Contacto</a>
         </div>
