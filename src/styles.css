@@ -247,6 +247,7 @@ h1 em {
 
 .hero-cube {
   width: min(560px, 90%);
+  aspect-ratio: 1;
   filter:
     drop-shadow(-25px 30px 44px rgba(27,107,255,.20))
     drop-shadow(24px 20px 48px rgba(255,106,63,.13));
@@ -255,9 +256,17 @@ h1 em {
     rotateX(calc(var(--my) * -1.2deg))
     rotateY(calc(var(--mx) * 1.8deg));
   transition: transform .28s cubic-bezier(.2,.8,.2,1);
-  animation: cube-breathe 5.8s ease-in-out infinite;
   position: relative;
   z-index: 2;
+}
+
+.hero-cube-motion {
+  background-repeat: no-repeat;
+  background-size: 800% 100%;
+  background-position: 0 0;
+  animation:
+    cube-frames 5.6s steps(7, end) infinite,
+    cube-breathe 5.8s ease-in-out infinite;
 }
 
 .hero-object::after {
@@ -292,6 +301,11 @@ h1 em {
   width: 116px;
   padding-left: 16px;
   border-left: 1px solid rgba(111,140,255,.38);
+}
+
+@keyframes cube-frames {
+  from { background-position: 0 0; }
+  to { background-position: 100% 0; }
 }
 
 @keyframes cube-breathe {
