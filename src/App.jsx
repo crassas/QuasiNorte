@@ -62,7 +62,7 @@ function useReveal() {
 
 function App() {
   const cubeRef = useRef(null)
-  const cubeSrc = `${import.meta.env.BASE_URL}quasi-norte-cube.webp`
+  const cubeVideoSrc = `${import.meta.env.BASE_URL}quasi-norte-cube-loop.mp4`
   useReveal()
 
   useEffect(() => {
@@ -118,14 +118,16 @@ function App() {
         <div className="hero-object page-enter" ref={cubeRef}>
           <div className="cube-aura" />
           <div className="hero-cube-stage">
-            <img
-              className="hero-cube"
-              src={cubeSrc}
-              alt="Cubo Quasi Norte com Q e N"
-              width="720"
-              height="720"
-              decoding="async"
-              fetchPriority="high"
+            <video
+              className="hero-cube-video"
+              src={cubeVideoSrc}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              disablePictureInPicture
+              aria-label="Cubo Quasi Norte em movimento"
             />
           </div>
           <div className="hero-object-copy" aria-hidden="true">
@@ -301,7 +303,16 @@ function App() {
           </div>
 
           <div className="final-cube-wrap" aria-hidden="true">
-            <img src={cubeSrc} alt="" />
+            <video
+              className="final-cube-video"
+              src={cubeVideoSrc}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              disablePictureInPicture
+            />
           </div>
         </div>
       </section>
